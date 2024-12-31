@@ -1,0 +1,4 @@
+openai
+python-dotenv
+flask       # Si usas una API web
+pytest      # Para pruebas
