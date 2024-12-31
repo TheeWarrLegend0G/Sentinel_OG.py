@@ -1,0 +1,133 @@
+sentinel_og/
+├── sentinel_og/        # Código principal
+│   ├── __init__.py     # Indica que es un paquete
+│   ├── core.py         # Lógica principal de la AI
+│   ├── utils.py        # Funciones auxiliares
+│   ├── config.py       # Configuración del proyecto
+├── tests/              # Tests automatizados
+│   ├── __init__.py
+│   ├── test_core.py    # Tests para el código principal
+├── requirements.txt    # Dependencias
+├── .env.example        # Variables de entorno de ejemplo
+├── install.sh          # Script de instalación
+├── README.md           # Documentación del proyecto
+├── setup.py            # Instalación como paquete Python
+└── main.py             # Punto de entrada del programa
+
+openai
+python-dotenv
+flask       # Si usas una API web
+pytest      # Para pruebas
+
+ 3. Archivo config.py
+
+Crea un archivo para cargar las configuraciones usando variables de entorno.
+
+Ejemplo de config.py:
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Carga las variables desde .env
+
+class Config:
+    API_KEY = os.getenv("API_KEY", "clave_por_defecto")
+    DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+
+4. Archivo main.py
+
+Este será el punto de entrada para ejecutar Sentinel OG.
+
+Ejemplo básico de main.py:
+from sentinel_og.core import run_sentinel
+
+def main():
+    print("Iniciando Sentinel OG...")
+    run_sentinel()
+
+if __name__ == "__main__":
+    main()
+
+5. Archivo core.py
+
+Aquí estará la lógica principal del programa.
+
+Ejemplo de core.py:
+from sentinel_og.config import Config
+
+def run_sentinel():
+    print("Cargando configuración...")
+    print(f"Modo Debug: {Config.DEBUG}")
+    print("Sentinel OG está listo para la acción.")
+Tests Automatizados
+
+Configura pytest para probar la funcionalidad.
+
+Ejemplo de test_core.py:
+from sentinel_og.core import run_sentinel
+
+def test_run_sentinel(capsys):
+    run_sentinel()
+    captured = capsys.readouterr()
+    assert "Sentinel OG está listo para la acción." in captured.out
+Ejecuta los tests con:
+pytest tests/
+7. Script de Instalación (install.sh)
+
+Automatiza la instalación para facilitar el setup.
+#!/bin/bash
+echo "Instalando Sentinel OG..."
+
+# Crear entorno virtual
+python3 -m venv venv
+source venv/bin/activate
+
+# Instalar dependencias
+pip install --upgrade pip
+pip install -r requirements.txt
+
+echo "Instalación completada. Ejecuta 'python main.py' para iniciar Sentinel OG."
+8. Archivo setup.py
+
+Esto permitirá instalar tu proyecto como un paquete Python.
+
+Ejemplo de setup.py:
+from setuptools import setup, find_packages
+
+setup(
+    name="sentinel_og",
+    version="2",
+    packages=find_packages(),
+    install_requires=[
+        "openai",
+        "python-dotenv",
+    ],
+    entry_points={
+        "console_scripts": [
+            "sentinel-og=sentinel_og.main:main",
+        ],
+    },
+)
+
+Para instalarlo como paquete local:
+
+	pip install .
+
+	9. Ejecución del Proyecto
+
+Para iniciar Sentinel OG, simplemente:
+
+	python main.py
+
+	Opcional: Dockerfile
+
+Si necesitas portabilidad, crea un contenedor Docker para Sentinel OG.
+
+	 FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY . .
+
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+CMD ["python", "main.py"]
