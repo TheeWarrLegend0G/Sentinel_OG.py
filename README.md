@@ -1,5 +1,3 @@
-Tu archivo README está bastante bien estructurado, pero hay algunos detalles y mejoras que podrías considerar para hacerlo aún más claro y profesional. A continuación, te doy una versión corregida y mejorada para que se vea más organizado y accesible para cualquier usuario que quiera usar o contribuir a tu proyecto.
-
 Versión Mejorada del README.md
 
 # Sentinel OG
